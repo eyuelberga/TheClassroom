@@ -1,0 +1,34 @@
+query GET_SUBMISSIONS_BY_ASSIGNMENT(
+  $assignmentId: uuid!
+  $limit: Int = 1
+  $cursor: timestamptz = "now()"
+) {
+  submissions(
+    where: {
+      _and: [
+        { assignment_id: { _eq: $assignmentId } }
+        { updated_at: { _lt: $cursor } }
+      ]
+    }
+    order_by: { updated_at: desc }
+    limit: $limit
+  ) {
+    student{
+      fullname
+      username
+      profilePicture:profile_picture
+    }
+    updatedAt: updated_at
+  }
+  total: submissions_aggregate(
+    where: {
+      _and: [
+        { assignment_id: { _eq: $assignmentId } }
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

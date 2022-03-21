@@ -7,27 +7,27 @@ import StatsCard from "../../components/App/StatsCard";
 import { FETCH_LIMIT as limit } from "../../config/constants";
 import { toastifyError } from "../../utils";
 
-const GET_ENROLLMENTS_CLASSROOM = loader(
-  "../../queries/classrooms/enrollments.gql"
+const GET_SUBMISSIONS = loader(
+  "../../queries/resources/submissions.gql"
 );
 
 export interface ManageUsersProps {
   previewLink: string;
-  classroomId?: string;
+  assignmentId?: string;
 }
 
-const Manage: React.FC<ManageUsersProps> = ({ classroomId, previewLink }) => {
-  const [resources, setUsers] = useState<any[]>([]);
+const Manage: React.FC<ManageUsersProps> = ({ assignmentId, previewLink }) => {
+  const [submissions, setUsers] = useState<any[]>([]);
   const [totalLeft, setTotalLeft] = useState(0);
   const [total, setTotal] = useState(0);
-  const query = GET_ENROLLMENTS_CLASSROOM;
+  const query = GET_SUBMISSIONS;
   const { error, loading } = useQuery(query, {
     fetchPolicy: "network-only",
     variables: {
-      classroomId,
+      assignmentId,
       limit,
     },
-    onCompleted: ({ enrollments: ns, total: t }) => {
+    onCompleted: ({ submissions: ns, total: t }) => {
       const fetchedUsers = ns as any[];
       setUsers(
         fetchedUsers.map(
@@ -45,26 +45,26 @@ const Manage: React.FC<ManageUsersProps> = ({ classroomId, previewLink }) => {
     onError: (e) => {
       toastifyError(e);
     },
-    onCompleted: ({ resources: moreNs }) => {
+    onCompleted: ({ submissions: moreNs }) => {
       const moreUsers = moreNs as any[];
       setTotalLeft(totalLeft - moreUsers.length);
-      setUsers([...resources, ...moreUsers]);
+      setUsers([...submissions, ...moreUsers]);
     },
   });
   const loadMore = () => {
     more({
       variables: {
-        classroomId,
+        assignmentId,
         limit,
         cursor:
-          resources[resources.length ? resources.length - 1 : 0].updatedAt,
+          submissions[submissions.length ? submissions.length - 1 : 0].updatedAt,
       },
     });
   };
   return (
     <>
       <StatsCard
-        title="Enrollments"
+        title="Submissions"
         stat={`${total}`}
         description="students currently enrolled in the class"
         icon={["far", "file"]}
@@ -74,7 +74,7 @@ const Manage: React.FC<ManageUsersProps> = ({ classroomId, previewLink }) => {
         link={previewLink}
         error={error}
         loading={loading}
-        data={resources}
+        data={submissions}
         footer={
           <Button
             isDisabled={totalLeft <= 0}

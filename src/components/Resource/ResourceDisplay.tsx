@@ -79,7 +79,6 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({
       )}
 
       <Flex alignItems="baseline" px={2}>
-        {ResourceStats}
         <Spacer />
         <Box p={1} rounded="10px" bg="gray.50">
           {onEdit && (
@@ -125,6 +124,7 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({
           )}
         </Box>
       </Flex>
+      {ResourceStats}
     </Box>
   );
   return <>{link ? <Link to={link}>{ResourceBody}</Link> : ResourceBody}</>;

@@ -28,10 +28,6 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
       setResource(n);
       setIsPublished(n.published);
       if (!n.published) setScheduledDate(n.schedule);
-      toastifySuccess({
-        title: "Updated!",
-        description: "your updated has been saved",
-      });
     },
   });
   const [update, { loading: updateLoading }] = useMutation(UPDATE_RESOURCE, {
@@ -149,7 +145,7 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
         data={displayData()}
         alert={alert(error)}
         fallback={
-          <EmptyPlaceholder icon="exclamation-circle" title="No Items Found" />
+          <EmptyPlaceholder icon="exclamation-circle" title="Nothing Here!" />
         }
       />
     </>

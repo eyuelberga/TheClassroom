@@ -32,6 +32,7 @@ export interface ResourceEditorProps extends Loadable {
   content?: string;
   action?: ReactNode;
   onSave?: (newValue: Resource) => void;
+  onSubmit?: (newValue: Resource) => void;
   onPublish?: (newValue: Resource) => void;
   onSchedule?: (newValue: ScheduledResource) => void;
 }

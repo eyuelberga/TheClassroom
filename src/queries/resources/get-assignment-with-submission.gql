@@ -1,0 +1,8 @@
+query GET_ASSIGNMENT_WITH_SUBMISSION($assignmentId: uuid!) {
+  assignment:resources_by_pk(id: $assignmentId) {
+    title
+    submissions {
+      content
+    }
+  }
+}

@@ -27,6 +27,7 @@ const ResourceEditor: React.FC<ResourceEditorProps> = ({
   content: initialContent,
   title: initialTitle,
   action,
+  onSubmit,
   onSave,
   onPublish,
   onSchedule,
@@ -69,6 +70,17 @@ const ResourceEditor: React.FC<ResourceEditorProps> = ({
               Save
             </MenuButton>
             <MenuList>
+              {onSubmit && (
+                <MenuItem
+                  icon={<FontAwesomeIcon icon="save" />}
+                  isDisabled={!validForm}
+                  onClick={() => {
+                    if (validForm) onSubmit({ title, content });
+                  }}
+                >
+                  Submit
+                </MenuItem>
+              )}
               {onSave && (
                 <MenuItem
                   icon={<FontAwesomeIcon icon="save" />}

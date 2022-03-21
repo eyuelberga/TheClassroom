@@ -23,6 +23,7 @@ import TCreateAssignment from "./Teacher/CreateAssignment";
 import TUpdateClassroom from "./Teacher/UpdateClassroom";
 import TUpdateNote from "./Teacher/UpdateNote";
 import TUpdateAssignment from "./Teacher/UpdateAssignment";
+import SubmitAssignment from "./Student/SubmitAssignment";
 const App: React.FC<Record<string, never>> = () => {
   return (
     <Routes>
@@ -59,6 +60,10 @@ const App: React.FC<Record<string, never>> = () => {
           <Route path="classroom/:classroomId" element={<SClassroom />} />
           <Route path="note/:noteId" element={<SNote />} />
           <Route path="assignment/:assignmentId" element={<SAssignment />} />
+          <Route
+            path="submit-assignment/:assignmentId"
+            element={<SubmitAssignment />}
+          />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

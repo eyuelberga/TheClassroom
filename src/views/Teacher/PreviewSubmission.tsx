@@ -23,14 +23,15 @@ const Detail: React.FC<DetailProps> = ({ studentId, assignmentId }) => {
       studentId,
       assignmentId,
     },
-    onCompleted: ({
-      submission: {
-        content,
-        assignment: { id, title },
-        updatedAt
-      },
-    }) => {
-      setSubmission({ id, content, title, updatedAt });
+    onCompleted: ({ submission }) => {
+      if (submission && submission.length) {
+        const {
+          content,
+          assignment: { id, title },
+          updatedAt,
+        } = submission[0];
+        setSubmission({ id, content, title, updatedAt });
+      }
       window.scrollTo({ top: 0 });
     },
   });

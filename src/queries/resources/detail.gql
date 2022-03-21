@@ -1,0 +1,10 @@
+query GET_RESOURCE($id: uuid!) {
+  resource: resources_by_pk(id: $id) {
+    id
+    title
+    content
+    published
+    schedule
+    updatedAt: updated_at
+  }
+}

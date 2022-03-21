@@ -1,0 +1,7 @@
+query GET_CLASSROOM($id: uuid!) {
+  classroom: classrooms_by_pk(id: $id) {
+    id
+    title
+    description
+  }
+}

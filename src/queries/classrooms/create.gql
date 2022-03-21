@@ -1,0 +1,13 @@
+mutation CREATE_CLASSROOM(
+  $title: String!
+  $description: String
+) {
+  category: insert_classrooms_one(
+    object: {
+      title: $title
+      description: $description
+    }
+  ) {
+    id
+  }
+}

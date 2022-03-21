@@ -1,0 +1,5 @@
+mutation DELETE_RESOURCE($id: uuid!) {
+  resource: delete_resources_by_pk(id: $id) {
+    id
+  }
+}

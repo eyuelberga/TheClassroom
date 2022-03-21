@@ -1,0 +1,18 @@
+mutation SCHEDULE_RESOURCE(
+  $id: uuid!
+  $title: String!
+  $content: String!
+  $timestamp: timestamptz!
+) {
+  resource: update_resources_by_pk(
+    pk_columns: { id: $id }
+    _set: { content: $content, title: $title }
+  ) {
+    id
+    published
+  }
+  schedule(resourceId: $id, schedule: $timestamp) {
+    scheduleId
+    date:schedule
+  }
+}

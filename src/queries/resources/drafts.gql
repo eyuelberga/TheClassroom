@@ -1,0 +1,37 @@
+query GET_DRAFT_RESOURCES_BY_CLASSROOM(
+  $classroomId: uuid!
+  $limit: Int = 1
+  $cursor: timestamptz = "now()"
+  $type: String = "NOTE"
+) {
+  resources(
+    where: {
+      _and: [
+        { published: { _eq: false } }
+        { type: { _eq: $type } }
+        { classroom_id: { _eq: $classroomId } }
+        { updated_at: { _lt: $cursor } }
+      ]
+    }
+    order_by: { updated_at: desc }
+    limit: $limit
+  ) {
+    id
+    title
+    updatedAt: updated_at
+    schedule
+  }
+  total: resources_aggregate(
+    where: {
+      _and: [
+        { published: { _eq: false } }
+        { classroom_id: { _eq: $classroomId } }
+        { type: { _eq: $type } }
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

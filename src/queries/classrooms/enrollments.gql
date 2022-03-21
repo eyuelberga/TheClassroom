@@ -1,0 +1,36 @@
+query GET_ENROLLMENTS_BY_CLASSROOM(
+  $classroomId: uuid!
+  $limit: Int = 1
+  $cursor: timestamptz = "now()"
+) {
+  enrollments:classroom_enrollments(
+    where: {
+      _and: [
+         { classroom_id: { _eq: $classroomId } }
+        { created_at: { _lt: $cursor } }
+      ]
+    }
+    order_by: { created_at: desc }
+    limit: $limit
+  ) {
+
+    student{
+      fullname
+      profilePicture:profile_picture
+      username
+    }
+    updatedAt: created_at
+  }
+  total: resources_aggregate(
+    where: {
+      _and: [
+      { published: { _eq: true } }
+       { classroom_id: { _eq: $classroomId } }
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

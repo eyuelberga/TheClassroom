@@ -1,0 +1,7 @@
+mutation ENROLL($classroomId: uuid!) {
+  classroom: insert_classroom_enrollments_one(object: {classroom_id: $classroomId}) {
+    classroom_id
+    user_id
+    created_at
+  }
+}

@@ -1,0 +1,15 @@
+mutation UPDATE_CLASSROOM(
+  $id: uuid!
+  $title: String!
+  $description: String
+) {
+  classroom: update_classrooms_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      title: $title
+      description: $description
+    }
+  ) {
+    id
+  }
+}

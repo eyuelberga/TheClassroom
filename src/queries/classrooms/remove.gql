@@ -1,0 +1,5 @@
+mutation DELETE_CLASSROOM($id: uuid!) {
+  classroom: delete_classrooms_by_pk(id: $id) {
+    id
+  }
+}

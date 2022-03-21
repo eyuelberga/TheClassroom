@@ -1,0 +1,19 @@
+mutation CREATE_RESOURCE(
+  $classroomId: uuid!
+  $title: String!
+  $content: String!
+  $type: String = "NOTE"
+  $published: Boolean = false
+) {
+  resource: insert_resources_one(
+    object: {
+      classroom_id: $classroomId
+      content: $content
+      title: $title
+      type: $type
+      published: $published
+    }
+  ) {
+    id
+  }
+}

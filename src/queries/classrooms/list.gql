@@ -1,0 +1,24 @@
+query GET_CLASSROOMS(
+  $limit: Int = 1
+  $cursor: timestamptz = "now()"
+) {
+  classrooms(
+    where: {
+      _and: [
+        { updated_at: { _lt: $cursor } }
+      ]
+    }
+    order_by: { updated_at: desc }
+    limit: $limit
+  ) {
+    id
+    title
+    description
+    updatedAt: updated_at
+  }
+  total: classrooms_aggregate{
+    aggregate {
+      count
+    }
+  }
+}

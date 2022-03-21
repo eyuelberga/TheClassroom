@@ -8,24 +8,29 @@ import SubNavigation from "../../components/App/SubNavigation";
 import { alert } from "../../utils";
 import AsyncRender from "../../components/App/AsyncRender";
 
-const GET_SUBMISSION = loader(
-  "../../queries/submissions/submission-detail.gql"
-);
+const GET_SUBMISSION = loader("../../queries/resources/submission-detail.gql");
 
 export interface DetailProps {
   assignmentId?: string;
-  studentId?:string
+  studentId?: string;
 }
 
-const Detail: React.FC<DetailProps> = ({ id }) => {
+const Detail: React.FC<DetailProps> = ({ studentId, assignmentId }) => {
   const [submission, setSubmission] = useState<any>(null);
 
   const { error, loading } = useQuery(GET_SUBMISSION, {
     variables: {
-      id,
+      studentId,
+      assignmentId,
     },
-    onCompleted: ({ submission: n }) => {
-      setSubmission(n);
+    onCompleted: ({
+      submission: {
+        content,
+        assignment: { id, title },
+        updatedAt
+      },
+    }) => {
+      setSubmission({ id, content, title, updatedAt });
       window.scrollTo({ top: 0 });
     },
   });

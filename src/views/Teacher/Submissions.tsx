@@ -7,16 +7,19 @@ import StatsCard from "../../components/App/StatsCard";
 import { FETCH_LIMIT as limit } from "../../config/constants";
 import { toastifyError } from "../../utils";
 
-const GET_SUBMISSIONS = loader(
-  "../../queries/resources/submissions.gql"
-);
+const GET_SUBMISSIONS = loader("../../queries/resources/submissions.gql");
 
 export interface ManageUsersProps {
   previewLink: string;
   assignmentId?: string;
+  assignmentName?: string;
 }
 
-const Manage: React.FC<ManageUsersProps> = ({ assignmentId, previewLink }) => {
+const Manage: React.FC<ManageUsersProps> = ({
+  assignmentId,
+  previewLink,
+  assignmentName,
+}) => {
   const [submissions, setUsers] = useState<any[]>([]);
   const [totalLeft, setTotalLeft] = useState(0);
   const [total, setTotal] = useState(0);
@@ -57,21 +60,22 @@ const Manage: React.FC<ManageUsersProps> = ({ assignmentId, previewLink }) => {
         assignmentId,
         limit,
         cursor:
-          submissions[submissions.length ? submissions.length - 1 : 0].updatedAt,
+          submissions[submissions.length ? submissions.length - 1 : 0]
+            .updatedAt,
       },
     });
   };
   return (
     <>
       <StatsCard
-        title="Submissions"
+        title={assignmentName ? `${assignmentName} Submissions` : "Submissions"}
         stat={`${total}`}
-        description="students currently enrolled in the class"
         icon={["far", "file"]}
       />
 
       <UserList
         link={previewLink}
+        queries={`assignmentId=${assignmentId}`}
         error={error}
         loading={loading}
         data={submissions}

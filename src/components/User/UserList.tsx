@@ -9,6 +9,7 @@ import AsyncRender from "../App/AsyncRender";
 
 const UserList: React.FC<UserListProps> = ({
   loading,
+  queries,
   data,
   error,
   header: Header,
@@ -26,7 +27,11 @@ const UserList: React.FC<UserListProps> = ({
         {Header}
         {data?.map(({ id, username, fullname, profilePicture }) => (
           <UserDisplay
-            link={link ? `${link}/${username}` : undefined}
+            link={
+              link
+                ? `${link}/${username}${queries ? `?${queries}` : ""}`
+                : undefined
+            }
             smallFont={smallFont}
             id={id}
             key={id}

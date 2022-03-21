@@ -1,18 +1,11 @@
-import React from 'react';
-import {
-  Avatar,
-  Box,
-  Text,
-  Stack,
-  Flex,
-  Spacer,
-  Wrap,
-} from '@chakra-ui/react';
-import {Link} from "react-router-dom";
-import { UserItemProps } from './props';
+import React from "react";
+import { Avatar, Box, Text, Stack, Flex, Spacer, Wrap } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { UserItemProps } from "./props";
 
 const UserItem: React.FC<UserItemProps> = ({
   fullname,
+  username,
   smallFont,
   link,
   profilePicture,
@@ -22,14 +15,14 @@ const UserItem: React.FC<UserItemProps> = ({
     <Box rounded="lg" borderWidth="1px" borderRadius="lg" p={smallFont ? 2 : 4}>
       <Flex>
         <Avatar
-          size={smallFont ? 'sm' : 'md'}
+          size={smallFont ? "sm" : "md"}
           src={profilePicture}
           name={fullname}
         />
         <Stack
           direction="column"
           spacing={0}
-          fontSize={smallFont ? 'xs' : 'sm'}
+          fontSize={smallFont ? "xs" : "sm"}
           mx={2}
         >
           <Wrap>
@@ -37,12 +30,14 @@ const UserItem: React.FC<UserItemProps> = ({
               {fullname}
             </Text>
           </Wrap>
+          <Wrap>
+            <Text noOfLines={1} color="gray">
+              {username}
+            </Text>
+          </Wrap>
         </Stack>
         <Spacer />
-        <Stack direction="row">
-
-          {Action}
-        </Stack>
+        <Stack direction="row">{Action}</Stack>
       </Flex>
     </Box>
   );

@@ -17,4 +17,5 @@ export interface UserItemProps
 export interface UserListProps
   extends ListProps<UserItemProps>,
   Pick<ExtendedDisplayProps, 'smallFont'> {
+    queries?:string;
 }

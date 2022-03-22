@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
-import { Button } from '@chakra-ui/react';
-import { useQuery, useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { loader } from 'graphql.macro';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ResourceDisplay from '../../components/Resource/ResourceDisplay';
-import ResourceDisplaySkeleton from '../../components/Resource/ResourceDisplaySkeleton';
-import EmptyPlaceholder from '../../components/App/EmptyPlaceholder';
-import SubNavigation from '../../components/App/SubNavigation';
-import { alert } from '../../utils';
-import AsyncRender from '../../components/App/AsyncRender';
+import React, { useState } from "react";
+import { Button } from "@chakra-ui/react";
+import { useQuery, useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { loader } from "graphql.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ResourceDisplay from "../../components/Resource/ResourceDisplay";
+import ResourceDisplaySkeleton from "../../components/Resource/ResourceDisplaySkeleton";
+import EmptyPlaceholder from "../../components/App/EmptyPlaceholder";
+import SubNavigation from "../../components/App/SubNavigation";
+import { alert } from "../../utils";
+import AsyncRender from "../../components/App/AsyncRender";
 
-const GET_RESOURCE = loader('../../queries/resources/detail.gql');
+const GET_RESOURCE = loader("../../queries/resources/detail.gql");
 
 export interface DetailProps {
   id?: string;
   editLink: string;
+  submissionsLink?: string;
 }
 
-const Detail: React.FC<DetailProps> = ({ id, editLink }) => {
+const Detail: React.FC<DetailProps> = ({ id, editLink, submissionsLink }) => {
   const navigate = useNavigate();
   const [resource, setResource] = useState<any>(null);
 
@@ -26,9 +27,7 @@ const Detail: React.FC<DetailProps> = ({ id, editLink }) => {
     variables: {
       id,
     },
-    onCompleted: ({
-      resource: n
-    }) => {
+    onCompleted: ({ resource: n }) => {
       setResource(n);
       window.scrollTo({ top: 0 });
     },
@@ -42,7 +41,6 @@ const Detail: React.FC<DetailProps> = ({ id, editLink }) => {
           title={resource.title}
           updatedAt={resource.updatedAt}
           content={resource.content}
-
         />
       </>
     );
@@ -59,16 +57,27 @@ const Detail: React.FC<DetailProps> = ({ id, editLink }) => {
         goBack
         title={resource?.title}
         action={
-          <Button
-            leftIcon={<FontAwesomeIcon icon="edit" />}
-            onClick={() => {
-              navigate(
-                `${editLink}/${id}`,
-              );
-            }}
-          >
-            Edit
-          </Button>
+          <>
+            <Button
+              leftIcon={<FontAwesomeIcon icon="edit" />}
+              onClick={() => {
+                navigate(`${editLink}/${id}`);
+              }}
+            >
+              Edit
+            </Button>
+            {submissionsLink && (
+              <Button
+                ml="2"
+                leftIcon={<FontAwesomeIcon icon={["far", "eye"]} />}
+                onClick={() => {
+                  navigate(`${submissionsLink}/${id}?title=${resource.title}`);
+                }}
+              >
+                View Submissions
+              </Button>
+            )}
+          </>
         }
       />
       <AsyncRender

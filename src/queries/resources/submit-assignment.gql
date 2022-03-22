@@ -1,0 +1,7 @@
+mutation SUBMIT_ASSIGNMENT($assignmentId: uuid!, $content: String!) {
+  insert_submissions_one(
+    object: { assignment_id: $assignmentId, content: $content }
+  ) {
+    student_id
+  }
+}

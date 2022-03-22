@@ -5,7 +5,7 @@ const Loader: React.FC<Record<string, never>> = () => {
   return (
     <Flex justify="center" align="center" style={{ height: "100vh" }}>
       <VStack>
-        <Image src={LogoImage} alt="logo" h={150} />
+        <Image src={LogoImage} alt="logo" h={100} />
         <Spinner
           thickness="4px"
           speed="0.65s"

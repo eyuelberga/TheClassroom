@@ -73,7 +73,7 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
         data={displayData()}
         alert={alert(error)}
         fallback={
-          <EmptyPlaceholder icon="exclamation-circle" title="No Items Found" />
+          <EmptyPlaceholder icon="exclamation-circle" title="Nothing Here!" />
         }
       />
     </>

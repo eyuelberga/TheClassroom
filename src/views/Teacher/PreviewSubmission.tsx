@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { loader } from "graphql.macro";
 import ResourceDisplay from "../../components/Resource/ResourceDisplay";
 import ResourceDisplaySkeleton from "../../components/Resource/ResourceDisplaySkeleton";
@@ -11,22 +8,30 @@ import SubNavigation from "../../components/App/SubNavigation";
 import { alert } from "../../utils";
 import AsyncRender from "../../components/App/AsyncRender";
 
-const GET_RESOURCE = loader("../../queries/resources/detail.gql");
+const GET_SUBMISSION = loader("../../queries/resources/submission-detail.gql");
 
 export interface DetailProps {
-  id?: string;
-  submitLink?: string;
+  assignmentId?: string;
+  studentId?: string;
 }
 
-const Detail: React.FC<DetailProps> = ({ id, submitLink }) => {
-  const [resource, setResource] = useState<any>(null);
-  const navigate = useNavigate();
-  const { error, loading } = useQuery(GET_RESOURCE, {
+const Detail: React.FC<DetailProps> = ({ studentId, assignmentId }) => {
+  const [submission, setSubmission] = useState<any>(null);
+
+  const { error, loading } = useQuery(GET_SUBMISSION, {
     variables: {
-      id,
+      studentId,
+      assignmentId,
     },
-    onCompleted: ({ resource: n }) => {
-      setResource(n);
+    onCompleted: ({ submission }) => {
+      if (submission && submission.length) {
+        const {
+          content,
+          assignment: { id, title },
+          updatedAt,
+        } = submission[0];
+        setSubmission({ id, content, title, updatedAt });
+      }
       window.scrollTo({ top: 0 });
     },
   });
@@ -35,38 +40,23 @@ const Detail: React.FC<DetailProps> = ({ id, submitLink }) => {
     return (
       <>
         <ResourceDisplay
-          id={resource.id}
-          title={resource.title}
-          updatedAt={resource.updatedAt}
-          content={resource.content}
+          id={submission.id}
+          title={submission.title}
+          updatedAt={submission.updatedAt}
+          content={submission.content}
         />
       </>
     );
   };
   const displayData = () => {
-    if (resource) {
+    if (submission) {
       return DataDisplay();
     }
     return undefined;
   };
   return (
     <>
-      <SubNavigation
-        goBack
-        title={resource?.title}
-        action={
-          submitLink ? (
-            <Button
-              leftIcon={<FontAwesomeIcon icon="edit" />}
-              onClick={() => {
-                navigate(`${submitLink}/${id}`);
-              }}
-            >
-              Submit
-            </Button>
-          ) : undefined
-        }
-      />
+      <SubNavigation goBack title={submission?.title} />
       <AsyncRender
         loading={loading}
         skeleton={<ResourceDisplaySkeleton isDetailed />}

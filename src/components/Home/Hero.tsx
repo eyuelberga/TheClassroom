@@ -33,7 +33,7 @@ const Hero: React.FC<HeroProps> = ({
         bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
       >
         <Stack maxW={"2xl"} align="center" spacing={6}>
-          <Image filter="invert(100%)" src={LogoImage} alt="logo" h={200} />;
+          <Image filter="invert(100%)" src={LogoImage} alt="logo" h={100} />;
           <Text color="white">{subtitle}</Text>
           <Text
             color={"white"}

@@ -64,8 +64,7 @@ const Page: React.FC<Record<string, any>> = () => {
             alignSelf={"flex-start"}
             rounded={"md"}
           >
-            CLASS CODE: 
-            {classroomId}
+            {`CLASS CODE: ${classroomId}`}
           </Text>
         }
         action={
@@ -104,7 +103,10 @@ const Page: React.FC<Record<string, any>> = () => {
             <T classroomId={classroomId} published />
           </TabPanel>
           <TabPanel>
-            <Enrollments classroomId={classroomId} previewLink="/app/teach/student" />
+            <Enrollments
+              classroomId={classroomId}
+              previewLink="/app/teach/student"
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -48,7 +48,6 @@ const ClassroomDisplay: React.FC<ClassroomDisplayProps> = ({
         )}
 
         <Flex mt={smallFont ? 2 : 4}>
-          {ClassroomStats}
           <Spacer />
 
           <Box>
@@ -89,6 +88,7 @@ const ClassroomDisplay: React.FC<ClassroomDisplayProps> = ({
             )}
           </Box>
         </Flex>
+        {ClassroomStats}
       </Box>
     </Box>
   );

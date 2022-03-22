@@ -1,0 +1,10 @@
+query GET_SUBMISSION($assignmentId: uuid!, $studentId: String!) {
+  submission: submissions(where: {assignment_id: {_eq:$assignmentId}, student: {username: {_eq: $studentId}}}) {
+    content
+    assignment {
+      id
+      title
+    }
+    updatedAt: updated_at
+  }
+}

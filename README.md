@@ -43,7 +43,7 @@ A custom login page with extra fields for full name and account type is also fou
 
 There are two APIs that need to be deployed. These are:
 The scheduler API for creating One-off Scheduled events and another endpoint for publishing a class resource. It is located at `apis/scheduler` 
-The Email notification API for sending emails to enrolled students when a teacher publishes a new class resource. It is located at `apis/send_email`
+The Email notification API for sending emails to enrolled students when a teacher publishes a new class resource. It is located at `apis/send_email`. You also need a [Mailjet](https://www.mailjet.com/) account for this.
 
 After running the two APIs, you need to link them to Hasura using env vars:
 ```

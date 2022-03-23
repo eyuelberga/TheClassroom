@@ -1,0 +1,114 @@
+table:
+  name: resources
+  schema: public
+object_relationships:
+- name: classroom
+  using:
+    foreign_key_constraint_on: classroom_id
+array_relationships:
+- name: submissions
+  using:
+    foreign_key_constraint_on:
+      column: assignment_id
+      table:
+        name: submissions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      classroom:
+        created_by:
+          _eq: X-Hasura-User-Id
+    columns:
+    - published
+    - content
+    - schedule_id
+    - title
+    - type
+    - created_at
+    - schedule
+    - updated_at
+    - classroom_id
+    - id
+  role: TEACHER
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - id
+    - created_at
+    - updated_at
+    - title
+    - content
+    - published
+    - classroom_id
+    - type
+    - schedule
+    - schedule_id
+    filter:
+      classroom:
+        enrollments:
+          user_id:
+            _eq: X-Hasura-User-Id
+    limit: 100
+  role: STUDENT
+- permission:
+    allow_aggregations: true
+    columns:
+    - published
+    - content
+    - schedule_id
+    - title
+    - type
+    - created_at
+    - schedule
+    - updated_at
+    - classroom_id
+    - id
+    filter:
+      classroom:
+        created_by:
+          _eq: X-Hasura-User-Id
+    limit: 100
+  role: TEACHER
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - published
+    - content
+    - schedule_id
+    - title
+    - type
+    - created_at
+    - schedule
+    - updated_at
+    - classroom_id
+    - id
+    filter:
+      classroom:
+        created_by:
+          _eq: X-Hasura-User-Id
+  role: TEACHER
+delete_permissions:
+- permission:
+    filter:
+      classroom:
+        created_by:
+          _eq: X-Hasura-User-Id
+  role: TEACHER
+event_triggers:
+- definition:
+    enable_manual: false
+    insert:
+      columns: "*"
+    update:
+      columns:
+      - published
+  name: send_email
+  retry_conf:
+    interval_sec: 10
+    num_retries: 0
+    timeout_sec: 60
+  webhook_from_env: EMAIL_NOTIFICATION_WEB_HOOK_URL

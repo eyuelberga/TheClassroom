@@ -1,0 +1,43 @@
+table:
+  name: classroom_enrollments
+  schema: public
+object_relationships:
+- name: classroom
+  using:
+    foreign_key_constraint_on: classroom_id
+- name: student
+  using:
+    foreign_key_constraint_on: user_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - user_id
+    set:
+      user_id: x-hasura-User-Id
+  role: STUDENT
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - user_id
+    - created_at
+    - classroom_id
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+    limit: 1
+  role: STUDENT
+- permission:
+    allow_aggregations: true
+    columns:
+    - user_id
+    - created_at
+    - classroom_id
+    filter:
+      classroom:
+        created_by:
+          _eq: X-Hasura-User-Id
+    limit: 100
+  role: TEACHER

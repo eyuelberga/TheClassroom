@@ -1,0 +1,14 @@
+actions:
+- name: schedule
+  definition:
+    kind: synchronous
+    handler: '{{SCHEDULE_API_BASE_URL}}/schedule'
+  permissions:
+  - role: TEACHER
+  comment: schedule deployment of resource
+custom_types:
+  enums: []
+  input_objects: []
+  objects:
+  - name: Output
+  scalars: []

@@ -1,0 +1,13 @@
+type Mutation {
+  schedule(
+    resourceId: uuid!
+    schedule: timestamptz!
+  ): Output
+}
+
+type Output {
+  scheduleId: String!
+  resourceId: uuid
+  schedule: timestamptz
+}
+

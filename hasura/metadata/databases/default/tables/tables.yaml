@@ -1,0 +1,5 @@
+- "!include public_classroom_enrollments.yaml"
+- "!include public_classrooms.yaml"
+- "!include public_resources.yaml"
+- "!include public_submissions.yaml"
+- "!include public_users.yaml"

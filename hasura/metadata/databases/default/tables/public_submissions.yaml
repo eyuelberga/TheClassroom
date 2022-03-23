@@ -1,0 +1,49 @@
+table:
+  name: submissions
+  schema: public
+object_relationships:
+- name: assignment
+  using:
+    foreign_key_constraint_on: assignment_id
+- name: student
+  using:
+    foreign_key_constraint_on: student_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - assignment_id
+    - content
+    set:
+      student_id: x-hasura-User-Id
+  role: STUDENT
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - content
+    - student_id
+    - created_at
+    - updated_at
+    - assignment_id
+    filter:
+      student_id:
+        _eq: X-Hasura-User-Id
+    limit: 100
+  role: STUDENT
+- permission:
+    allow_aggregations: true
+    columns:
+    - content
+    - student_id
+    - created_at
+    - updated_at
+    - assignment_id
+    filter:
+      assignment:
+        classroom:
+          created_by:
+            _eq: X-Hasura-User-Id
+    limit: 100
+  role: TEACHER

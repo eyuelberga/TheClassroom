@@ -1,0 +1,80 @@
+table:
+  name: classrooms
+  schema: public
+object_relationships:
+- name: teacher
+  using:
+    foreign_key_constraint_on: created_by
+array_relationships:
+- name: enrollments
+  using:
+    foreign_key_constraint_on:
+      column: classroom_id
+      table:
+        name: classroom_enrollments
+        schema: public
+- name: resources
+  using:
+    foreign_key_constraint_on:
+      column: classroom_id
+      table:
+        name: resources
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - description
+    - title
+    set:
+      created_by: x-hasura-User-Id
+  role: TEACHER
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - id
+    - created_at
+    - updated_at
+    - title
+    - description
+    - created_by
+    filter:
+      enrollments:
+        user_id:
+          _eq: X-Hasura-User-Id
+    limit: 100
+  role: STUDENT
+- permission:
+    allow_aggregations: true
+    columns:
+    - created_by
+    - description
+    - title
+    - created_at
+    - updated_at
+    - id
+    filter:
+      created_by:
+        _eq: X-Hasura-User-Id
+    limit: 100
+  role: TEACHER
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - description
+    - title
+    filter:
+      created_by:
+        _eq: X-Hasura-User-Id
+    set:
+      created_by: x-hasura-User-Id
+  role: TEACHER
+delete_permissions:
+- permission:
+    filter:
+      created_by:
+        _eq: X-Hasura-User-Id
+  role: TEACHER

@@ -1,0 +1,60 @@
+table:
+  name: users
+  schema: public
+array_relationships:
+- name: classrooms
+  using:
+    foreign_key_constraint_on:
+      column: created_by
+      table:
+        name: classrooms
+        schema: public
+- name: enrollments
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: classroom_enrollments
+        schema: public
+- name: submissions
+  using:
+    foreign_key_constraint_on:
+      column: student_id
+      table:
+        name: submissions
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - id
+    - username
+    - email
+    - fullname
+    - role
+    - profile_picture
+    - created_at
+    - updated_at
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+    limit: 1
+  role: STUDENT
+- permission:
+    allow_aggregations: true
+    columns:
+    - email
+    - fullname
+    - id
+    - profile_picture
+    - role
+    - username
+    - created_at
+    - updated_at
+    filter:
+      enrollments:
+        classroom:
+          created_by:
+            _eq: X-Hasura-User-Id
+    limit: 100
+  role: TEACHER

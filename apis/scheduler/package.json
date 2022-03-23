@@ -1,0 +1,20 @@
+{
+  "name": "scheduler-api",
+  "version": "0.0.1",
+  "description": "API to schedule class resource publication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "graphql-request": "^3.5.0",
+    "graphql": "^15.5.1",
+    "body-parser": "^1.19.0"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "license": "MIT",
+}

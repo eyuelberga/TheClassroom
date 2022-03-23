@@ -18,8 +18,7 @@ const Features: React.FC<FeaturesProps> = ({ features, image }) => {
       <Stack spacing={4}>
         <Heading>A better way to organize your classes</Heading>
         <Text color={"gray.500"} fontSize={"lg"}>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore
+          The Classroom helps you communicate with your students easily
         </Text>
         <Stack
           spacing={4}

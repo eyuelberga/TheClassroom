@@ -15,6 +15,7 @@ export interface ResourceDisplayProps
   ExtendedDisplayProps {
   content?: string;
   label?: string;
+  footer?:ReactNode;
 }
 
 export interface Resource {

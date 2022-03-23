@@ -26,6 +26,7 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({
   link,
   smallFont,
   updatedAt,
+  footer
 }) => {
   const iconSize = content ? "lg" : "md";
   const tagSize = !smallFont ? "md" : "sm";
@@ -125,6 +126,7 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({
         </Box>
       </Flex>
       {ResourceStats}
+      {footer}
     </Box>
   );
   return <>{link ? <Link to={link}>{ResourceBody}</Link> : ResourceBody}</>;

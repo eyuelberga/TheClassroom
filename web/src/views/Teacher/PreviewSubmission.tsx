@@ -5,6 +5,7 @@ import ResourceDisplay from "../../components/Resource/ResourceDisplay";
 import ResourceDisplaySkeleton from "../../components/Resource/ResourceDisplaySkeleton";
 import EmptyPlaceholder from "../../components/App/EmptyPlaceholder";
 import SubNavigation from "../../components/App/SubNavigation";
+import UserItem from "../../components/User/UserItem";
 import { alert } from "../../utils";
 import AsyncRender from "../../components/App/AsyncRender";
 
@@ -29,8 +30,17 @@ const Detail: React.FC<DetailProps> = ({ studentId, assignmentId }) => {
           content,
           assignment: { id, title },
           updatedAt,
+          student: { fullname, username, profilePicture },
         } = submission[0];
-        setSubmission({ id, content, title, updatedAt });
+        setSubmission({
+          id,
+          content,
+          title,
+          updatedAt,
+          fullname,
+          username,
+          profilePicture,
+        });
       }
       window.scrollTo({ top: 0 });
     },
@@ -44,6 +54,13 @@ const Detail: React.FC<DetailProps> = ({ studentId, assignmentId }) => {
           title={submission.title}
           updatedAt={submission.updatedAt}
           content={submission.content}
+          footer={
+            <UserItem
+              fullname={submission.fullname}
+              username={submission.username}
+              profilePicture={submission.profilePicture}
+            />
+          }
         />
       </>
     );

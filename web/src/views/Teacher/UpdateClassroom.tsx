@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { loader } from 'graphql.macro';
+import {useNavigate} from "react-router-dom";
 import { useQuery, useMutation } from '@apollo/client';
 import CreateClassroom from '../../components/Classroom/CreateClassroom';
 import ClassroomDisplaySkeleton from '../../components/Classroom/ClassroomDisplaySkeleton';
@@ -16,7 +17,7 @@ export interface UpdateProps {
   id?: string;
 }
 const Update: React.FC<UpdateProps> = ({ id }) => {
-
+  const navigate = useNavigate();
   const [classroom, setClassroom] = useState<Classroom | undefined>();
   const { error, loading } = useQuery(GET_CLASSROOM, {
     fetchPolicy: 'network-only',
@@ -37,6 +38,7 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
         title: 'Classroom updated',
         description: 'Classroom has been updated sucessfully',
       });
+      navigate(-1);
     },
   });
 

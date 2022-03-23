@@ -5,6 +5,11 @@ query GET_SUBMISSION($assignmentId: uuid!, $studentId: String!) {
       id
       title
     }
+    student{
+      username
+      fullname
+      profilePicture: profile_picture
+    }
     updatedAt: updated_at
   }
 }

@@ -43,6 +43,10 @@ export default function CallToActionWithIllustration() {
             icon: <FontAwesomeIcon icon={["far", "calendar-alt"]} />,
             title: "Schedule your new posts ahead of time",
           },
+          {
+            icon: <FontAwesomeIcon icon="envelope" />,
+            title: "Student will get notified when new class resources are avaliable",
+          },
         ]}
       />
     </>

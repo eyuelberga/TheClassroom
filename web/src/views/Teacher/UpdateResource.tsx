@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
+import { useNavigate } from "react-router-dom";
 import ResourceEditor from "../../components/Resource/ResourceEditor";
 import ResourceDisplaySkeleton from "../../components/Resource/ResourceDisplaySkeleton";
 import EmptyPlaceholder from "../../components/App/EmptyPlaceholder";
@@ -16,6 +17,7 @@ export interface UpdateProps {
   id?: string;
 }
 const Update: React.FC<UpdateProps> = ({ id }) => {
+  const navigate  = useNavigate();
   const [resource, setResource] = useState<Resource | undefined>();
   const [isPublished, setIsPublished] = useState(false);
   const [scheduledDate, setScheduledDate] = useState("");
@@ -42,6 +44,7 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
         title: "Updated!",
         description: "your updated has been saved",
       });
+      navigate(-1);
     },
   });
   const [schedule, { loading: scheduleLoading }] = useMutation(
@@ -56,9 +59,10 @@ const Update: React.FC<UpdateProps> = ({ id }) => {
           setIsPublished(true);
         }
         toastifySuccess({
-          title: "Updated!",
+          title: "Scheduled!",
           description: "your updated has been saved",
         });
+        navigate(-1);
       },
     }
   );

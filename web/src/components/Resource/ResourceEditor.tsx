@@ -120,7 +120,7 @@ const ResourceEditor: React.FC<ResourceEditorProps> = ({
             id="ResourceEditor_Title"
             size="lg"
             minW="100%"
-            placeholder="Resource title"
+            placeholder="Title"
             value={title}
             fontSize="xl"
             fontWeight="semibold"
@@ -143,7 +143,7 @@ const ResourceEditor: React.FC<ResourceEditorProps> = ({
           <Editor
             id="ResourceEditor_Editor"
             defaultValue={content}
-            placeholder="Write your resource here..."
+            placeholder="Write here..."
             onChange={(e: any) => {
               const c = e();
               if (c === "\\\n") {

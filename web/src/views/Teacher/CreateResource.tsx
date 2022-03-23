@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 import { loader } from "graphql.macro";
 import ResourceEditor from "../../components/Resource/ResourceEditor";
 import SubNavigation from "../../components/App/SubNavigation";
@@ -15,6 +16,7 @@ export interface CreateProps {
   type: string;
 }
 const Create: React.FC<CreateProps> = ({ classroomId, type }) => {
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [isPublished, setIsPublished] = useState(false);
   const [scheduledDate, setScheduledDate] = useState("");
@@ -28,9 +30,10 @@ const Create: React.FC<CreateProps> = ({ classroomId, type }) => {
       const { id: newId } = resource;
       setId(newId);
       toastifySuccess({
-        title: 'Draft Saved!',
+        title: "Saved!",
         description: `${type} has been saved`,
       });
+      navigate(-1);
     },
   });
   const [createAndSchedule, { loading: saveAndScheduleLoading }] = useMutation(
@@ -43,7 +46,7 @@ const Create: React.FC<CreateProps> = ({ classroomId, type }) => {
         const { id: newId } = resource;
         setId(newId);
         toastifySuccess({
-          title: 'Draft Saved!',
+          title: "Saved!",
           description: `${type} has been saved`,
         });
         if (resourcePayload)
@@ -56,6 +59,7 @@ const Create: React.FC<CreateProps> = ({ classroomId, type }) => {
               type,
             },
           });
+        navigate(-1);
       },
     }
   );
@@ -70,9 +74,10 @@ const Create: React.FC<CreateProps> = ({ classroomId, type }) => {
         setIsPublished(true);
       }
       toastifySuccess({
-        title: 'Updated!',
+        title: "Updated!",
         description: `${type} has been updated`,
       });
+      navigate(-1);
     },
   });
   const [schedule, { loading: scheduleLoading }] = useMutation(

@@ -16,6 +16,18 @@ Teachers can share school resources with their Students.
 
 The project was built using React, Auth0, and the Hasura GraphQL Engine.
 
+
+## Preview
+![Landing](assets/theclassroom_landing.png)
+
+![Dashboard](assets/theclassroom_dashboard.png)
+
+![Create Classroom](assets/theclassroom_create_classroom.png)
+
+![Add Assignment](assets/theclassroom_add_assignment.png)
+
+![Schedule Assignment](assets/theclassroom_schedule.png)
+
 ## Setting up Hasura
 
 The Hasura project files are located in the folder `hasura`. You can use the Hasura CLI to start a local instance or deploy it remotely. 
